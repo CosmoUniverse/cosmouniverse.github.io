@@ -157,6 +157,7 @@ p {
 .service-card h3 {
     color: var(--primary-color);
     margin-bottom: var(--spacing-sm);
+    text-align: center;
 }
 
 .service-list {

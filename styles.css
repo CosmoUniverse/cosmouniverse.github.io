@@ -58,6 +58,20 @@ h2 {
     color: var(--text-light);
     margin-bottom: var(--spacing-md);
     text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    border-radius: 2px;
 }
 
 h3 {
@@ -77,6 +91,28 @@ p {
     text-align: center;
     padding: var(--spacing-xl) 0;
     background: linear-gradient(135deg, var(--background-dark) 0%, #1a1a1a 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(255, 153, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(126, 211, 33, 0.1) 0%, transparent 50%);
+    animation: float 20s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-10px) rotate(1deg); }
+    66% { transform: translateY(5px) rotate(-1deg); }
 }
 
 .logo {
@@ -85,6 +121,9 @@ p {
     font-weight: 700;
     color: var(--primary-color);
     margin-bottom: var(--spacing-sm);
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 20px rgba(255, 153, 0, 0.3);
 }
 
 .tagline {
@@ -114,6 +153,24 @@ p {
 /* Main Content Sections */
 .section {
     padding: var(--spacing-xl) 0;
+    position: relative;
+}
+
+.section:nth-child(even) {
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.5) 0%, rgba(42, 42, 42, 0.3) 100%);
+}
+
+.section:nth-child(even)::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 153, 0, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(74, 144, 226, 0.05) 0%, transparent 50%);
+    pointer-events: none;
 }
 
 .hero-section {
@@ -131,6 +188,36 @@ p {
     color: var(--text-light);
     max-width: 800px;
     margin: 0 auto var(--spacing-md);
+    position: relative;
+    z-index: 2;
+}
+
+.hero-highlight {
+    background: linear-gradient(135deg, rgba(255, 153, 0, 0.1) 0%, rgba(255, 153, 0, 0.05) 100%);
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--primary-color);
+}
+
+.highlight-number {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.3em;
+    text-shadow: 0 0 10px rgba(255, 153, 0, 0.3);
+}
+
+.big-text-background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-primary);
+    font-size: 8rem;
+    font-weight: 700;
+    color: rgba(255, 153, 0, 0.03);
+    z-index: 0;
+    user-select: none;
+    pointer-events: none;
 }
 
 /* Services Grid */
@@ -152,6 +239,32 @@ p {
 .service-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Service Icons */
+.service-icon {
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.service-icon i {
+    font-size: 3rem;
+    color: var(--primary-color);
+    background: linear-gradient(135deg, rgba(255, 153, 0, 0.1) 0%, rgba(255, 153, 0, 0.05) 100%);
+    padding: var(--spacing-md);
+    border-radius: 50%;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    line-height: 48px;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 153, 0, 0.2);
+}
+
+.service-card:hover .service-icon i {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(255, 153, 0, 0.4);
+    border-color: var(--primary-color);
 }
 
 .service-card h3 {
@@ -192,11 +305,54 @@ p {
     border-radius: var(--border-radius);
     text-align: center;
     border: 1px solid #333;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.expertise-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 153, 0, 0.1), transparent);
+    transition: left 0.5s ease;
 }
 
 .expertise-item:hover {
-    transform: translateY(-2px);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(255, 153, 0, 0.2);
+}
+
+.expertise-item:hover::before {
+    left: 100%;
+}
+
+/* Expertise Icons */
+.expertise-icon {
+    margin-bottom: var(--spacing-sm);
+}
+
+.expertise-icon i {
+    font-size: 2.5rem;
+    color: var(--secondary-color);
+    background: linear-gradient(135deg, rgba(249, 203, 156, 0.1) 0%, rgba(249, 203, 156, 0.05) 100%);
+    padding: var(--spacing-sm);
+    border-radius: 50%;
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    line-height: 38px;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(249, 203, 156, 0.2);
+}
+
+.expertise-item:hover .expertise-icon i {
+    transform: rotateY(360deg);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
 }
 
 .expertise-number {
@@ -205,6 +361,7 @@ p {
     color: var(--primary-color);
     display: block;
     margin-bottom: var(--spacing-xs);
+    text-shadow: 0 0 10px rgba(255, 153, 0, 0.3);
 }
 
 /* Process Section */

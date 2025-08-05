@@ -251,14 +251,15 @@ p {
     font-size: 3rem;
     color: var(--primary-color);
     background: linear-gradient(135deg, rgba(255, 153, 0, 0.1) 0%, rgba(255, 153, 0, 0.05) 100%);
-    padding: var(--spacing-md);
     border-radius: 50%;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 80px;
     height: 80px;
-    line-height: 48px;
     transition: all 0.3s ease;
     border: 2px solid rgba(255, 153, 0, 0.2);
+    margin: 0 auto;
 }
 
 .service-card:hover .service-icon i {
@@ -333,20 +334,22 @@ p {
 /* Expertise Icons */
 .expertise-icon {
     margin-bottom: var(--spacing-sm);
+    text-align: center;
 }
 
 .expertise-icon i {
     font-size: 2.5rem;
     color: var(--secondary-color);
     background: linear-gradient(135deg, rgba(249, 203, 156, 0.1) 0%, rgba(249, 203, 156, 0.05) 100%);
-    padding: var(--spacing-sm);
     border-radius: 50%;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 70px;
     height: 70px;
-    line-height: 38px;
     transition: all 0.3s ease;
     border: 2px solid rgba(249, 203, 156, 0.2);
+    margin: 0 auto;
 }
 
 .expertise-item:hover .expertise-icon i {

@@ -621,25 +621,33 @@ p {
     --gallery-gap: var(--spacing-md);
 }
 
+
 .horizontal-gallery .scroller-viewport {
     position: relative;
-    overflow: hidden;
+    overflow-x: auto;      /* must be scrollable for scrollLeft to work */
+    overflow-y: hidden;
     padding: calc(var(--gallery-gap) / 2) 0;
-    /* Soft fade on edges for nicer look */
+    -webkit-overflow-scrolling: touch;
+    /* Hide scrollbars but keep scrolling */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     -webkit-mask-image: linear-gradient(to right, transparent 0, black 5%, black 95%, transparent 100%);
             mask-image: linear-gradient(to right, transparent 0, black 5%, black 95%, transparent 100%);
 }
+.horizontal-gallery .scroller-viewport::-webkit-scrollbar { display: none; }
+
 
 .horizontal-gallery .scroller-track {
     display: inline-flex;
     gap: var(--gallery-gap);
     align-items: center;
     will-change: transform;
+    min-width: max-content; /* ensure content defines width so scrolling works */
 }
 
 .horizontal-gallery .gallery-item {
     flex: 0 0 auto;
-    width: clamp(220px, 32vw, 220px);
+    width: clamp(220px, 32vw, 420px);
     /* aspect-ratio: 16 / 9; */
     border-radius: 12px;
     overflow: hidden;

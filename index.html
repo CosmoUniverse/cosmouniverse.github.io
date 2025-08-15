@@ -198,11 +198,26 @@
                             <p>Fresh & passionate talents, eager to success</p>
                         </div>
                     </div>
-                    <p><strong>Notable projects by team members</strong></p>
-                    <div><img src="images/np2.png" width:100% /></div>
+                    <section class="section horizontal-gallery" id="gallery">
+                        <div class="container">
+                            <strong>Notable projects</strong>
+                            <div class="scroller-viewport" data-speed="50" aria-label="Auto-scrolling image gallery">
+                                <div class="scroller-track">
+                                    <figure class="gallery-item"><img src="images/notable-projects/crossfire.png" alt="Crossfire"></figure>
+                                    <figure class="gallery-item"><img src="images/notable-projects/football-manager-online.png" alt="Football Manager Online"></figure>
+                                    <figure class="gallery-item"><img src="images/notable-projects/homeworld-mobile.png" alt="Homeworld Mobile"></figure>
+                                    <figure class="gallery-item"><img src="images/notable-projects/merge-mansion.png" alt="Merge Mansion"></figure>
+                                    <figure class="gallery-item"><img src="images/notable-projects/ragnarok-online.png" alt="Ragnarok Online"></figure>
+                                    <figure class="gallery-item"><img src="images/notable-projects/trials.png" alt="Trials"></figure>
+                                    <figure class="gallery-item"><img src="images/notable-projects/vector-strike.png" alt="Vector Strike"></figure>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </section>
+
 
         <!-- Contact Section -->
         <section class="section">
@@ -232,6 +247,56 @@
             <p>&copy; 2025 CosmoUniverse OY. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+    (function () {
+        var views = document.querySelectorAll('.horizontal-gallery .scroller-viewport');
+        if (!views.length) return;
+
+        views.forEach(function(view) {
+            var track = view.querySelector('.scroller-track');
+            if (!track) return;
+
+            // Duplicate children for seamless looping
+            var children = Array.prototype.slice.call(track.children);
+            children.forEach(function(node){ track.appendChild(node.cloneNode(true)); });
+
+            var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var speed = parseFloat(view.getAttribute('data-speed') || '40'); // px/sec
+            var paused = false;
+            var lastTs = null;
+
+            function step(ts) {
+                if (lastTs === null) lastTs = ts;
+                var dt = (ts - lastTs) / 1000;
+                lastTs = ts;
+
+                if (!paused && !prefersReduced) {
+                    view.scrollLeft += speed * dt;
+                    var half = track.scrollWidth / 2;
+                    if (view.scrollLeft >= half) {
+                        view.scrollLeft -= half; // seamless wrap
+                    }
+                }
+                requestAnimationFrame(step);
+            }
+
+            // Pause on hover/focus/touch
+            function setPaused(v){ paused = v; }
+            view.addEventListener('mouseenter', function(){ setPaused(true); });
+            view.addEventListener('mouseleave', function(){ setPaused(false); });
+            view.addEventListener('focusin', function(){ setPaused(true); });
+            view.addEventListener('focusout', function(){ setPaused(false); });
+            view.addEventListener('pointerdown', function(){ setPaused(true); });
+            view.addEventListener('pointerup', function(){ setPaused(false); });
+            view.addEventListener('touchstart', function(){ setPaused(true); }, {passive:true});
+            view.addEventListener('touchend', function(){ setPaused(false); });
+
+            requestAnimationFrame(step);
+        });
+    })();
+    </script>
+
 </body>
 
 </html>

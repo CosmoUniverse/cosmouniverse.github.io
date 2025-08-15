@@ -615,3 +615,56 @@ p {
         font-size: 1.5rem;
     }
 }
+
+/* --- Horizontal Auto-Scrolling Gallery --- */
+.horizontal-gallery {
+    --gallery-gap: var(--spacing-md);
+}
+
+.horizontal-gallery .scroller-viewport {
+    position: relative;
+    overflow: hidden;
+    padding: calc(var(--gallery-gap) / 2) 0;
+    /* Soft fade on edges for nicer look */
+    -webkit-mask-image: linear-gradient(to right, transparent 0, black 5%, black 95%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0, black 5%, black 95%, transparent 100%);
+}
+
+.horizontal-gallery .scroller-track {
+    display: inline-flex;
+    gap: var(--gallery-gap);
+    align-items: center;
+    will-change: transform;
+}
+
+.horizontal-gallery .gallery-item {
+    flex: 0 0 auto;
+    width: clamp(220px, 32vw, 220px);
+    /* aspect-ratio: 16 / 9; */
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #333;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+}
+
+.horizontal-gallery .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+/* Slight zoom on hover without breaking layout */
+.horizontal-gallery .scroller-viewport:hover .gallery-item img {
+    transform: scale(1.03);
+}
+
+.horizontal-gallery .gallery-hint {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-top: var(--spacing-sm);
+}
+

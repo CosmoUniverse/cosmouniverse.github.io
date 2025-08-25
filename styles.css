@@ -677,8 +677,8 @@ p {
 
 /* --- Compact Vertical Rhythm Utilities --- */
 .section.section--compact {
-    padding-top: var(--spacing-sm);
-    padding-bottom: var(--spacing-sm);
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 /* Tighten gallery internals when compact */

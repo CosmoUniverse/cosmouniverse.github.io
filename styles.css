@@ -675,3 +675,19 @@ p {
     margin-top: var(--spacing-sm);
 }
 
+/* --- Compact Vertical Rhythm Utilities --- */
+.section.section--compact {
+    padding-top: var(--spacing-sm);
+    padding-bottom: var(--spacing-sm);
+}
+
+/* Tighten gallery internals when compact */
+.section--compact.horizontal-gallery .scroller-viewport {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.section--compact.horizontal-gallery .gallery-hint {
+    margin-top: var(--spacing-xs);
+}
+

@@ -413,7 +413,7 @@ p {
     border-color: var(--primary-color);
 }
 
-.expertise-number {
+.card-title-item {
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--primary-color);
@@ -471,6 +471,7 @@ p {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: var(--spacing-sm);
     margin: var(--spacing-md) 0;
+    margin-block-end: var(--spacing-xs);
 }
 
 .stat-item {
@@ -621,7 +622,6 @@ p {
     --gallery-gap: var(--spacing-md);
 }
 
-
 .horizontal-gallery .scroller-viewport {
     position: relative;
     overflow-x: auto;      /* must be scrollable for scrollLeft to work */
@@ -636,7 +636,6 @@ p {
 }
 .horizontal-gallery .scroller-viewport::-webkit-scrollbar { display: none; }
 
-
 .horizontal-gallery .scroller-track {
     display: inline-flex;
     gap: var(--gallery-gap);
@@ -647,7 +646,7 @@ p {
 
 .horizontal-gallery .gallery-item {
     flex: 0 0 auto;
-    width: clamp(220px, 32vw, 420px);
+    width: clamp(110px, 16vw, 210px);
     /* aspect-ratio: 16 / 9; */
     border-radius: 12px;
     overflow: hidden;

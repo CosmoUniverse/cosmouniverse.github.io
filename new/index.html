@@ -141,9 +141,15 @@ section[id], [id^="about"], [id^="services"], [id^="games"], [id^="contact"]{
 <!-- ===== Fixed Top Menu Bar (injected) ===== -->
 <nav aria-label="Primary" class="site-topnav">
 <div class="nav-inner">
-<a class="brand" href="/">
+<a class="brand" href="http://www.cosmouniverse.io">
 <img class="brand-logo" src="./images/logo-cosmouniverse.png" alt="CosmoUniverse">
 </a>
+
+<button class="nav-toggle" aria-label="Open menu" aria-controls="nav-popup" aria-expanded="false">
+  <span class="bar"></span>
+  <span class="bar"></span>
+  <span class="bar"></span>
+</button>
 <div class="nav-links" role="navigation">
 <a href="#about-us" title="About Us">About Us</a>
 <a href="#our-services" title="Our Services">Our Services</a>
@@ -152,6 +158,22 @@ section[id], [id^="about"], [id^="services"], [id^="games"], [id^="contact"]{
 </div>
 </div>
 </nav>
+<!-- Mobile Nav Popup -->
+<div class="nav-popup" id="nav-popup" hidden aria-hidden="true" role="dialog" aria-modal="true">
+  <div class="nav-popup__backdrop" data-close="true"></div>
+  <div class="nav-popup__panel" role="document">
+    <button class="nav-popup__close" aria-label="Close menu" data-close="true">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <nav class="nav-popup__links" aria-label="Mobile">
+      <a href="#about-us" data-close="true">About Us</a>
+      <a href="#our-services" data-close="true">Our Services</a>
+      <a href="#games" data-close="true">Games</a>
+      <a href="#contact" data-close="true">Contact</a>
+    </nav>
+  </div>
+</div>
+
 <!-- Header Section -->
 <header class="header">
 <div class="container">
@@ -174,7 +196,7 @@ section[id], [id^="about"], [id^="services"], [id^="games"], [id^="contact"]{
 </div>
 </section>
 <!-- About Section -->
-<section class="section">
+<section class="section" id="cosmouniverse">
 <div class="container">
 <h2>Connect Your Players</h2>
 <div class="hero-section">
@@ -188,7 +210,7 @@ section[id], [id^="about"], [id^="services"], [id^="games"], [id^="contact"]{
 </div>
 </section>
 <!-- Services Section -->
-<section class="section">
+<section class="section" id="our-services">
 <div class="container">
 <h2>What We Do</h2>
 <div class="services-grid">
@@ -259,7 +281,7 @@ section[id], [id^="about"], [id^="services"], [id^="games"], [id^="contact"]{
 </div>
 </section>
 <!-- Expertise Section -->
-<section class="section">
+<section class="section" id="about-us">
 <div class="container">
 <h2>Your Superheros</h2>
 <div class="expertise-grid">
@@ -332,7 +354,7 @@ section[id], [id^="about"], [id^="services"], [id^="games"], [id^="contact"]{
 </div>
 </section>
 <!-- Contact Section -->
-<section class="section">
+<section class="section" id="contact">
 <div class="container">
 <div class="contact-section">
 <h2>Connect With Us</h2>
@@ -406,5 +428,49 @@ section[id], [id^="about"], [id^="services"], [id^="games"], [id^="contact"]{
         });
     })();
     </script>
-<div aria-hidden="true"><section id="about-us" style="min-height: 1px;"><h2 style="position:absolute;left:-9999px;">About Us</h2></section><section id="our-services" style="min-height: 1px;"><h2 style="position:absolute;left:-9999px;">Our Services</h2></section><section id="games" style="min-height: 1px;"><h2 style="position:absolute;left:-9999px;">Games</h2></section><section id="contact" style="min-height: 1px;"><h2 style="position:absolute;left:-9999px;">Contact</h2></section></div></body>
+<div aria-hidden="true"><section id="our-services" style="min-height: 1px;"><h2 style="position:absolute;left:-9999px;">Our Services</h2></section><section id="games" style="min-height: 1px;"><h2 style="position:absolute;left:-9999px;">Games</h2></section><section id="contact" style="min-height: 1px;"><h2 style="position:absolute;left:-9999px;">Contact</h2></section></div>
+<script>
+(function(){
+  var toggle = document.querySelector('.nav-toggle');
+  var popup = document.getElementById('nav-popup');
+  if (!toggle || !popup) return;
+
+  function openMenu(){
+    popup.hidden = false;
+    popup.setAttribute('aria-hidden', 'false');
+    toggle.setAttribute('aria-expanded', 'true');
+    document.documentElement.classList.add('no-scroll');
+    // animate icon
+    toggle.classList.add('is-open');
+  }
+  function closeMenu(){
+    popup.setAttribute('aria-hidden', 'true');
+    toggle.setAttribute('aria-expanded', 'false');
+    document.documentElement.classList.remove('no-scroll');
+    toggle.classList.remove('is-open');
+    // delay hiding to allow animation (optional)
+    setTimeout(function(){ popup.hidden = true; }, 150);
+  }
+
+  toggle.addEventListener('click', function(){
+    var expanded = toggle.getAttribute('aria-expanded') === 'true';
+    if (expanded) closeMenu(); else openMenu();
+  });
+  popup.addEventListener('click', function(ev){
+    var target = ev.target;
+    if (target && (target.getAttribute('data-close') === 'true' || target.classList.contains('nav-popup'))) {
+      closeMenu();
+    }
+  });
+  document.addEventListener('keydown', function(ev){
+    if (ev.key === 'Escape'){ closeMenu(); }
+  });
+  // Close on any link click inside popup
+  popup.querySelectorAll('a[data-close="true"]').forEach(function(a){
+    a.addEventListener('click', function(){ closeMenu(); });
+  });
+})();
+</script>
+
+</body>
 </html>

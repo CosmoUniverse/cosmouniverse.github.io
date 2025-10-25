@@ -926,3 +926,45 @@ nav.site-topnav .nav-toggle .nav-toggle__label::before{
 .nav-dropdown__panel{
   width: min(86vw, 280px);
 }
+
+
+
+/* === Mobile nav fit fixes v2 === */
+@media (max-width: 900px){
+  html, body { max-width: 100%; overflow-x: hidden; }
+  .site-topnav{ --nav-height: 56px; }
+  .site-topnav .nav-inner{
+    min-height: var(--nav-height);
+    padding: 6px 10px;
+    gap: 10px;
+    overflow: hidden;
+  }
+  .site-topnav .brand{
+    max-width: calc(100% - 120px); /* leave room for Menu button */
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .site-topnav .brand img{
+    height: 32px;
+    width: auto;
+    max-width: 160px;
+  }
+  .site-topnav .nav-toggle{
+    height: 36px;
+    padding: 0 10px;
+    font-size: 14px;
+    line-height: 1;
+    flex: 0 0 auto;
+  }
+  /* Keep dropdown tucked to the right under the bar */
+  .nav-dropdown{ top: var(--nav-height); right: 8px; left: auto; }
+  .nav-dropdown__panel{ width: min(88vw, 280px); }
+}
+/* Ultra-small devices */
+@media (max-width: 360px){
+  .site-topnav{ --nav-height: 52px; }
+  .site-topnav .nav-inner{ padding: 6px 8px; gap: 8px; }
+  .site-topnav .brand{ max-width: calc(100% - 108px); }
+  .site-topnav .brand img{ height: 28px; }
+  .site-topnav .nav-toggle{ height: 34px; padding: 0 8px; font-size: 13px; }
+}

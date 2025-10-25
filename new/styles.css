@@ -968,3 +968,23 @@ nav.site-topnav .nav-toggle .nav-toggle__label::before{
   .site-topnav .brand img{ height: 28px; }
   .site-topnav .nav-toggle{ height: 34px; padding: 0 8px; font-size: 13px; }
 }
+
+
+/* === Mobile nav fit: final overrides === */
+html, body { max-width: 100%; overflow-x: hidden; }
+
+/* Ensure inner container never exceeds screen width */
+nav.site-topnav .nav-inner { max-width: 100%; }
+nav.site-topnav .brand img { max-width: min(50vw, 180px); height: auto; }
+
+/* Let brand shrink if space is tight */
+nav.site-topnav .brand { min-width: 0; overflow: hidden; }
+
+/* Use safe-area for dropdown top position */
+.nav-dropdown { top: calc(var(--nav-height) + env(safe-area-inset-top, 0px)) !important; }
+
+/* Ultra-narrow screens */
+@media (max-width: 360px){
+  nav.site-topnav .nav-toggle{ padding: 0 8px; font-size: 13px; }
+  nav.site-topnav .brand img{ max-width: 44vw; }
+}

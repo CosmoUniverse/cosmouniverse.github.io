@@ -31,14 +31,15 @@
 html{ scroll-behavior: smooth; }
 
 body{
-  padding-top: var(--nav-height);
+  padding-top: calc(var(--nav-height) + env(safe-area-inset-top, 0px));
 }
 
 /* Container */
 .site-topnav{
   position: fixed;
   top: 0; left: 0; right: 0;
-  height: var(--nav-height);
+  height: calc(var(--nav-height) + env(safe-area-inset-top, 0px));
+  padding-top: env(safe-area-inset-top, 0px);
   background: var(--nav-bg);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -49,16 +50,16 @@ body{
 }
 
 .site-topnav .nav-inner{
-  width: min(1200px, 92vw);
+  width: 100%; padding-inline: clamp(8px, 4vw, 16px); max-width: none;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: clamp(8px, 3vw, 16px);
 }
 
 /* Branding */
-.site-topnav .brand{
+.site-topnav .brand{ min-width: 0;
   font-size: 1.125rem;
   font-weight: 700;
   letter-spacing: 0.2px;
@@ -107,8 +108,8 @@ section[id], [id^="about"], [id^="services"], [id^="games"], [id^="contact"]{
 }
 
 /* Small screens */
-@media (max-width: 600px){
-  :root{ --nav-height: 56px; }
+@media (max-width: 900px){
+  :root{ --nav-height: clamp(48px, 10vw, 56px); }
   .site-topnav .brand{ font-size: 1rem; }
   .site-topnav .nav-links a{ height: 36px; padding: 0 12px; font-size: 0.9rem; }
 }
@@ -122,7 +123,8 @@ section[id], [id^="about"], [id^="services"], [id^="games"], [id^="contact"]{
 
 /* ===== Ensure fixed bar height (injected) ===== */
 .site-topnav{
-  height: var(--nav-height);
+  height: calc(var(--nav-height) + env(safe-area-inset-top, 0px));
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 
@@ -146,7 +148,7 @@ section[id], [id^="about"], [id^="services"], [id^="games"], [id^="contact"]{
 <img class="brand-logo" src="./images/logo-cosmouniverse.png" alt="CosmoUniverse">
 </a>
 
-<button class="nav-toggle" aria-label="Open menu" aria-controls="nav-dropdown" aria-expanded="false"><span class="nav-toggle__label">☰</span></button>
+<button class="nav-toggle" aria-label="Open menu" aria-controls="nav-dropdown" aria-expanded="false"><span class="nav-toggle__label">Menu</span></button>
 <div class="nav-links" role="navigation">
 <a href="#about-us" title="About Us">About Us</a>
 <a href="#our-services" title="Our Services">Our Services</a>

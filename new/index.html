@@ -145,11 +145,7 @@ section[id], [id^="about"], [id^="services"], [id^="games"], [id^="contact"]{
 <img class="brand-logo" src="./images/logo-cosmouniverse.png" alt="CosmoUniverse">
 </a>
 
-<button class="nav-toggle" aria-label="Open menu" aria-controls="nav-popup" aria-expanded="false">
-  <span class="bar"></span>
-  <span class="bar"></span>
-  <span class="bar"></span>
-</button>
+<button class="nav-toggle" aria-label="Open menu" aria-controls="nav-dropdown" aria-expanded="false"><span class="nav-toggle__label">Menu</span></button>
 <div class="nav-links" role="navigation">
 <a href="#about-us" title="About Us">About Us</a>
 <a href="#our-services" title="Our Services">Our Services</a>
@@ -157,11 +153,16 @@ section[id], [id^="about"], [id^="services"], [id^="games"], [id^="contact"]{
 <a href="#contact" title="Contact">Contact</a>
 </div>
 </div>
-</nav>
-<!-- Mobile Nav Popup -->
-<div class="nav-popup" id="nav-popup" hidden aria-hidden="true" role="dialog" aria-modal="true">
-  <div class="nav-popup__backdrop" data-close="true"></div>
-  <div class="nav-popup__panel" role="document">
+
+<div class="nav-dropdown" id="nav-dropdown" hidden aria-hidden="true">
+  <nav class="nav-dropdown__panel" aria-label="Mobile">
+    <a href="#about-us" data-close="true">About Us</a>
+    <a href="#our-services" data-close="true">Our Services</a>
+    <a href="#games" data-close="true">Games</a>
+    <a href="#contact" data-close="true">Contact</a>
+  </nav>
+</div>
+</nav>  <div class="nav-popup__panel" role="document">
     <button class="nav-popup__close" aria-label="Close menu" data-close="true">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -468,6 +469,50 @@ section[id], [id^="about"], [id^="services"], [id^="games"], [id^="contact"]{
   // Close on any link click inside popup
   popup.querySelectorAll('a[data-close="true"]').forEach(function(a){
     a.addEventListener('click', function(){ closeMenu(); });
+  });
+})();
+</script>
+
+
+<script>
+(function(){
+  var toggle = document.querySelector('.nav-toggle');
+  var dropdown = document.getElementById('nav-dropdown');
+  if (!toggle || !dropdown) return;
+
+  function openMenu(){
+    dropdown.hidden = false;
+    dropdown.setAttribute('aria-hidden', 'false');
+    toggle.setAttribute('aria-expanded', 'true');
+  }
+  function closeMenu(){
+    dropdown.setAttribute('aria-hidden', 'true');
+    toggle.setAttribute('aria-expanded', 'false');
+    // delay hiding slightly to allow CSS transitions if any
+    setTimeout(function(){ dropdown.hidden = true; }, 120);
+  }
+
+  toggle.addEventListener('click', function(ev){
+    var expanded = toggle.getAttribute('aria-expanded') === 'true';
+    if (expanded) closeMenu(); else openMenu();
+  });
+
+  // Close on clicking outside the dropdown or on link click
+  document.addEventListener('click', function(ev){
+    var expanded = toggle.getAttribute('aria-expanded') === 'true';
+    if (!expanded) return;
+    var t = ev.target;
+    if (t.closest && (t.closest('#nav-dropdown') || t.closest('.nav-toggle'))) return;
+    closeMenu();
+  });
+
+  dropdown.querySelectorAll('a[data-close="true"]').forEach(function(a){
+    a.addEventListener('click', function(){ closeMenu(); });
+  });
+
+  // Close on Esc
+  document.addEventListener('keydown', function(ev){
+    if (ev.key === 'Escape'){ closeMenu(); }
   });
 })();
 </script>

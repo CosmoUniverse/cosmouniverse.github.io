@@ -887,3 +887,42 @@ p {
 /* General responsive helpers */
 img{ max-width: 100%; height: auto; }
 :where(.container, .wrap, .shell){ max-width: 1200px; margin-inline: auto; padding-inline: clamp(12px, 3vw, 24px); }
+
+
+
+/* === Mobile top bar & dropdown visibility fixes === */
+@media (max-width: 900px){
+  nav.site-topnav .nav-toggle{ display: inline-flex !important; }
+  nav.site-topnav .nav-links{ display: none !important; }
+}
+
+/* Make the Menu button always readable */
+nav.site-topnav .nav-toggle{
+  margin-left: auto;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  line-height: 1;
+  color: #111;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+/* Add ☰ icon before label */
+nav.site-topnav .nav-toggle .nav-toggle__label::before{
+  content: "☰";
+  display: inline-block;
+  margin-right: 6px;
+  font-size: 18px;
+}
+
+/* Fix dropdown: position under the bar on the right */
+.nav-dropdown{
+  position: fixed;
+  top: var(--nav-height, 64px);
+  right: 12px;
+  left: auto;
+}
+.nav-dropdown__panel{
+  width: min(86vw, 280px);
+}

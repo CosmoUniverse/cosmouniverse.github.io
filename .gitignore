@@ -43,3 +43,9 @@ yarn-error.log*
 # Build artifacts
 dist/
 build/
+
+# AI Assistant & Specs directories
+.gemini/
+.specify/
+.specs/
+specs/

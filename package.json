@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "build:seo": "node generate-seo.js"
+  },
+  "dependencies": {
+    "canvas": "^3.2.0",
+    "cheerio": "^1.1.2",
+    "glob": "^13.0.0"
+  }
+}

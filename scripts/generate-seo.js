@@ -3,6 +3,9 @@ const path = require('path');
 const { glob } = require('glob');
 const cheerio = require('cheerio');
 
+// Project root directory (one level up from scripts/)
+const rootDir = path.join(__dirname, '..');
+
 const SITE_URL = 'https://www.cosmouniverse.io';
 const HTML_FILES_PATTERN = '**/*.html';
 const IGNORE_PATTERNS = ['node_modules/**', 'dist/**', 'build/**', '.gemini/**'];
@@ -10,17 +13,18 @@ const IGNORE_PATTERNS = ['node_modules/**', 'dist/**', 'build/**', '.gemini/**']
 function getUrlPath(filePath) {
     // Convert backslashes to forward slashes for URL consistency
     let relativePath = filePath.replace(/\\/g, '/');
-    
+
     // Split path into segments to encode each segment individually
     const segments = relativePath.split('/');
     const encodedSegments = segments.map(segment => encodeURIComponent(segment));
-    
+
     return encodedSegments.join('/');
 }
 
 async function processFile(filePath) {
+    const fullPath = path.join(rootDir, filePath);
     console.log(`Processing: ${filePath}`);
-    const content = fs.readFileSync(filePath, 'utf8');
+    const content = fs.readFileSync(fullPath, 'utf8');
     const $ = cheerio.load(content);
     let modified = false;
 
@@ -28,9 +32,9 @@ async function processFile(filePath) {
     const metaDescription = $('meta[name="description"]');
     if (metaDescription.length === 0) {
         console.log(`  - Missing description. Generating...`);
-        
+
         let descriptionText = '';
-        
+
         // Try .page-description first
         const pageDesc = $('.page-description').first();
         if (pageDesc.length > 0 && pageDesc.text().trim()) {
@@ -52,7 +56,7 @@ async function processFile(filePath) {
             if (descriptionText.length > 160) {
                 descriptionText = descriptionText.substring(0, 157) + '...';
             }
-            
+
             // Clean up text (remove newlines, extra spaces)
             descriptionText = descriptionText.replace(/\s+/g, ' ').trim();
 
@@ -65,11 +69,11 @@ async function processFile(filePath) {
     }
 
     if (modified) {
-        fs.writeFileSync(filePath, $.html(), 'utf8');
+        fs.writeFileSync(fullPath, $.html(), 'utf8');
     }
 
     // Return metadata for Sitemap
-    const stats = fs.statSync(filePath);
+    const stats = fs.statSync(fullPath);
     return {
         url: `${SITE_URL}/${getUrlPath(filePath)}`,
         lastMod: stats.mtime.toISOString().split('T')[0] // YYYY-MM-DD
@@ -78,7 +82,7 @@ async function processFile(filePath) {
 
 function generateSitemap(pages) {
     console.log('Generating sitemap.xml...');
-    
+
     let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
     xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
 
@@ -91,21 +95,21 @@ function generateSitemap(pages) {
 
     xml += '</urlset>';
 
-    fs.writeFileSync('sitemap.xml', xml, 'utf8');
+    fs.writeFileSync(path.join(rootDir, 'sitemap.xml'), xml, 'utf8');
     console.log(`  - Written sitemap.xml with ${pages.length} URLs.`);
 }
 
 function generateRobotsTxt() {
     console.log('Generating robots.txt...');
     const content = `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml`;
-    fs.writeFileSync('robots.txt', content, 'utf8');
+    fs.writeFileSync(path.join(rootDir, 'robots.txt'), content, 'utf8');
     console.log('  - Written robots.txt');
 }
 
 console.log('Starting SEO generation...');
 
 async function scanFiles() {
-    return glob(HTML_FILES_PATTERN, { ignore: IGNORE_PATTERNS });
+    return glob(HTML_FILES_PATTERN, { cwd: rootDir, ignore: IGNORE_PATTERNS });
 }
 
 async function main() {
@@ -120,7 +124,7 @@ async function main() {
 
         generateSitemap(pages);
         generateRobotsTxt();
-        
+
         console.log('SEO generation complete.');
 
     } catch (error) {

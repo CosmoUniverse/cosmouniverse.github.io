@@ -4,10 +4,11 @@ const { createCanvas, loadImage } = require('canvas');
 
 // Project root directory (one level up from scripts/)
 const rootDir = path.join(__dirname, '..');
+const assetsDir = path.join(rootDir, 'assets');
 
 async function convertStarfieldPattern() {
     try {
-        const svgData = fs.readFileSync(path.join(rootDir, 'starfield-pattern.svg'), 'utf8');
+        const svgData = fs.readFileSync(path.join(assetsDir, 'starfield-pattern.svg'), 'utf8');
         const svgDataUrl = 'data:image/svg+xml;base64,' + Buffer.from(svgData).toString('base64');
 
         // Create different sizes
@@ -38,8 +39,8 @@ async function convertStarfieldPattern() {
             }
 
             const buffer = canvas.toBuffer('image/png');
-            fs.writeFileSync(path.join(rootDir, size.name), buffer);
-            console.log(`✓ Created: ${size.name} (${size.width}x${size.height}px)`);
+            fs.writeFileSync(path.join(assetsDir, size.name), buffer);
+            console.log(`✓ Created: assets/${size.name} (${size.width}x${size.height}px)`);
         }
 
         console.log('\n✓ All starfield pattern images created!');

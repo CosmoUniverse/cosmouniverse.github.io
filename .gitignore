@@ -33,6 +33,7 @@ $RECYCLE.BIN/
 *.tmp
 *.temp
 *.log
+tmpclaude-*
 
 # Node modules (if used for tooling)
 node_modules/

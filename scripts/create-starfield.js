@@ -4,6 +4,7 @@ const { createCanvas } = require('canvas');
 
 // Project root directory (one level up from scripts/)
 const rootDir = path.join(__dirname, '..');
+const assetsDir = path.join(rootDir, 'assets');
 
 function createStarfield(width, height, starCount, filename) {
     const canvas = createCanvas(width, height);
@@ -43,11 +44,11 @@ function createStarfield(width, height, starCount, filename) {
         }
     }
 
-    // Save as PNG to project root
-    const outputPath = path.join(rootDir, filename);
+    // Save as PNG to assets directory
+    const outputPath = path.join(assetsDir, filename);
     const buffer = canvas.toBuffer('image/png');
     fs.writeFileSync(outputPath, buffer);
-    console.log(`✓ Created: ${filename} (${width}x${height}px with ${starCount} stars)`);
+    console.log(`✓ Created: assets/${filename} (${width}x${height}px with ${starCount} stars)`);
 }
 
 // Create different versions

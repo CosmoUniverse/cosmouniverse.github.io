@@ -33,6 +33,7 @@ $RECYCLE.BIN/
 *.tmp
 *.temp
 *.log
+tmpclaude-*
 
 # Node modules (if used for tooling)
 node_modules/
@@ -43,3 +44,10 @@ yarn-error.log*
 # Build artifacts
 dist/
 build/
+
+# AI Assistant & Specs directories
+.gemini/
+.specify/
+.specs/
+specs/
+GEMINI.md
